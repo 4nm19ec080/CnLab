@@ -33,7 +33,7 @@ int main(){
 for(i=1;i<=n;i++){
 	printf("For router %d:\n",i);
 		for(j=1;j<=n;j++){
-			printf("\t to node %d via %d, Distance is %d",j,a[i][j],t[i][j]);
+			printf("\t to node %d via %d, Distance is %d\n",j,a[i][j],t[i][j]);
 					}
 		}
 	return 0;

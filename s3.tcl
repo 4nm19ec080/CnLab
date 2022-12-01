@@ -1,23 +1,20 @@
 set ns [new Simulator]
 
-set tracefile [ open s3.tr w ]
-$ns trace-all $tracefile
-
-set namfile [ open s3.nam w ]
+set namfile [open s3.nam w]
 $ns namtrace-all $namfile
 
-proc finish{}{
-	global ns tracefile namfile
+set tracefile [open s3.tr w]
+$ns trace-all $tracefile
+
+proc finish {} {
+	global ns namfile tracefile
 	$ns flush-trace
-
-	close tracefile
-	close namfile
-
+	close $namfile
+	close $tracefile
 	exec nam s3.nam &
-	exec awk -f s3.awk s3.tr &
-	exit 0;
+	exec awk -f s3.awk s3.tr > s3.graph &
+	exit 0
 }
-
 set n0 [$ns node]
 set n1 [$ns node]
 set n2 [$ns node]
@@ -31,7 +28,7 @@ $n6 label "TCPSink"
 
 $ns color 1 red
 $n0 color blue
-$n6 color yellow
+$n6 color orange
 
 $ns duplex-link $n0 $n1 3Mb 20ms DropTail
 $ns make-lan "$n1 $n2 $n3 $n4 $n5 $n6" 2Mb 40ms LL Queue/DropTail Mac/802_3
@@ -41,18 +38,17 @@ $ns duplex-link-op $n0 $n1 orient right
 set tcp [new Agent/TCP]
 $ns attach-agent $n0 $tcp
 
+$tcp set class_ 1
+
 set tcpsink [new Agent/TCPSink]
 $ns attach-agent $n6 $tcpsink
 
-set ftp [new Agent/FTP]
-$ftp attach-agent  $tcp
+set ftp [new Application/FTP]
+$ftp attach-agent $tcp
 
 $ns connect $tcp $tcpsink
-
-$tcp set class_ 1 
 
 $ns at 1.0 "$ftp start"
 $ns at 5.0 "$ftp stop"
 $ns at 5.5 "finish"
 $ns run
-

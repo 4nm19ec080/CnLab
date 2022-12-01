@@ -6,8 +6,8 @@
 int main(){
 	char flag[]="*", src[Max],dest[Max];
 	int si=0,di=0;
-	printf("Character Stuffing ");
-	printf("Enter the the ASCII Data: ");
+	printf("Character Stuffing; \n");
+	printf("Enter the the ASCII Data: \t");
 	scanf("%s",src);
 	strcpy(dest,flag);
 	di++;
@@ -28,5 +28,5 @@ int main(){
 			dest[di++]=src[si++];
 	}
 	strcat(dest,flag);
-	printf("The final Answer is: %s",dest);
+	printf("The final Answer is: %s \n",dest);
 }

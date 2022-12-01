@@ -27,7 +27,7 @@ void main()
                     //count=6;
                 }
         }
-    //dest[di]='\0';
+    dest[di]='\0';
     strcat(dest,flag);
-    printf("\n\n Stuffed Data is: \t %s",dest);
+    printf("\n\n Stuffed Data is: \t %s\n",dest);
 }
